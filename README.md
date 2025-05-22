@@ -75,3 +75,69 @@ This in turn led to the development of imatinib mesylate, a clinically successfu
 
 This was the first human cancer in which a consistent genetic abnormality was demonstrated to cause the disease.
 
+BCR-ABL is a fusion gene formed when parts of two different chromosomes — chromosome 9 and chromosome 22 — break off and swap places. This specific abnormal chromosome is called the Philadelphia chromosome (Ph).
+
+BCR (Breakpoint Cluster Region): From chromosome 22
+
+ABL (Abelson murine leukemia viral oncogene homolog 1): From chromosome 9
+
+This gene fusion produces a BCR-ABL protein, an abnormal tyrosine kinase that is always active, leading to uncontrolled cell division.
+
+1960: The Philadelphia chromosome was discovered by Nowell and Hungerford in patients with chronic myeloid leukemia (CML). This was the first consistent chromosomal abnormality associated with cancer.
+
+Significance: First genetic link to cancer ever found — a breakthrough in understanding cancer as a genetic disease.
+
+1980s–1990s: Molecular studies revealed that the translocation created the BCR-ABL fusion gene. 
+
+Key Insight: The fusion protein acts like a switch that is stuck "on," driving cancer growth by promoting rapid and uncontrolled white blood cell proliferation. 
+
+
+**Plan of the project:**
+
+-> **Identification of relevant genes:** In relation to a particular network or affecting a phenomenon/phenotype
+
+-> **Interactions/connections between them:** To understand how these genes interact with one another and have an impact on the end points
+
+-> **Direction of interaction:** Considering the example of 2 genes, gene A and gene B, we are to determine:
+
+-If gene A-> gene B (Could be a positive/negative interaction)
+
+-If gene B -> gene A (Could be a positive/negative interaction)
+
+-If a feedback loop is observed
+
+-> **Strength of the interacton:** The impact that a gene has on its downstream is to be determined
+
+-> **Network Coverage:** Based on these imputs, the network is to be built
+
+
+## Datasets come across that can help with the scope of the project:
+
+--
+
+DABS datasets: The Diagnostic and Biomarkers Statistical (DABS) Center is a specialized research unit focused on the statistical evaluation, validation, and advancement of diagnostic tools and biological markers (biomarkers) used in clinical medicine and translational research.
+
+Function in relation to biomarkers:
+Biomarker Validation:
+Helps determine whether a biomarker can reliably detect or predict a disease, progression, or response to treatment.
+Focuses on both analytical validity (how accurately and reliably the test measures the biomarker) and clinical validity (how well the biomarker predicts a clinical outcome).
+
+Several publicly available datasets designed for practicing statistical methods in medical diagnostics and biomarker research. These datasets are particularly useful for researchers and students aiming to understand and apply statistical techniques in the context of medical data.
+
+
+Apply Statistical Methods for Biomarker Validation
+Test or learn how to use advanced statistical methods:
+Logistic regression to model disease status as a function of biomarkers.
+Time-dependent ROC curves for biomarkers in survival analysis.
+Net Reclassification Improvement (NRI) to assess whether a new biomarker improves patient classification.
+Decision Curve Analysis (DCA) to weigh clinical usefulness.
+
+**Relevant to our project**
+Use the datasets to compare the performance of two or more biomarkers or test algorithms:
+Is biomarker A better than biomarker B?
+Does combining A + B improve diagnosis?
+Does adding clinical features (age, symptoms) improve performance?
+
+https://research.fredhutch.org/diagnostic-biomarkers-center/en/datasets.html 
+
+
