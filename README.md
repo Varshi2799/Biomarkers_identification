@@ -1,129 +1,68 @@
 # Biomarkers_identification
 
-# History of Biomarker Identification
+What is a biomarker?
 
-This repository outlines the historical evolution of **biomarker identification**, highlighting major scientific advances, technologies, and methodologies — from clinical observations to AI-driven precision medicine.
+Biomarkers are indicators of disease occurrence and progression. They can be used to assess normal biological and pathogenic processes or pharmacologic responses to a therapeutic intervention and, in some cases, may serve as potential drug and prognostic targets.
 
----
+Biomarkers help not only in disease diagnosis (diagnostic biomarkers) but also in identifying potential treatments and tracking disease progression, regression, and outcome after an intervention.
 
-## Table of Contents
-- [1. Pre-Molecular Era (Before 1970s)](#1-pre-molecular-era-before-1970s)
-- [2. Molecular Biology Era (1970s–1980s)](#2-molecular-biology-era-1970s–1980s)
-- [3. Genomics and High-Throughput Screening Era (1990s–early 2000s)](#3-genomics-and-high-throughput-screening-era-1990s–early-2000s)
-- [4. Bioinformatics and In Silico Era (Mid-2000s–2010s)](#4-bioinformatics-and-in-silico-era-mid-2000s–2010s)
-- [5. Systems Biology and Multi-Omics Integration (2010s–2020s)](#5-systems-biology-and-multi-omics-integration-2010s–2020s)
-- [6. AI and Precision Medicine Era (2020s–present)](#6-ai-and-precision-medicine-era-2020s–present)
-- [BCR-ABL as a Case Study](#bcr-abl-as-a-case-study)
-- [Summary Table](#summary-table)
+In modern healthcare, biomarkers are an integral part of approaches to monitoring patient health and condition, providing researchers with a means of predicting treatment response.
 
----
+## CLASSIFICATION OF BIOMARKERS:
+Biomarkers have been classified based on different parameters, including their characteristics, clinical applications, and finally, genetic and molecular biology methods
 
-## 1. Pre-Molecular Era (Before 1970s)
-### Approach:
-- Observational correlations between symptoms and physiological markers.
-- Routine biochemical assays (blood, urine tests).
+**Genetic and molecular biology biomarkers**: Measurable indicators that provide insights into an individual's genetic makeup, biological processes, or disease states. These biomarkers play a crucial role in medical diagnostics, disease monitoring, and personalized treatment strategies.
 
-### Examples:
-- Glucose for diabetes.
-- ALT/AST for liver damage.
-- PSA for prostate function.
+Type 0, Type1 and Type 2 Biomarkers
+According to Genetics and Molecular Biology methods, biomarkers can be classified as follows 
 
----
+## Type 0 Biomarkers
+Also known as natural history biomarkers. These biomarkers help measure the natural history of a disease and correlate over time with known clinical indicators.
+An example of a type 0 biomarker is the measurement of serum creatinine to measure kidney function or monitor injury to kidneys.
 
-## 2. Molecular Biology Era (1970s–1980s)
-### Approach:
-- DNA, RNA, and protein profiling via blotting techniques.
-- Use of monoclonal antibodies.
+## Type 1 Biomarkers
+These are drug activity biomarkers, and they indicate the effect of drug intervention. They may be further divided into:
+**Efficacy biomarkers** – indicating the therapeutic effects of a drug;
+**Mechanism biomarkers** – giving information about the mechanism of action of a drug;
+**Toxicity biomarkers** – indicating the toxicological effects of a drug.
+Examples of type 1 biomarkers include blood glucose levels (efficacy biomarker) to monitor the effects of insulin treatment [4] and cytokines (mechanism biomarker) in autoimmune diseases such as rheumatoid arthritis.
 
-### Tools:
-- Southern, Northern, and Western blotting.
+## Type 2 Biomarkers
+These are surrogate markers (also known as surrogate endpoints) that serve as a substitute for a clinical outcome of a disease and also help predict the effect of a therapeutic intervention. Such markers may correlate with clinical endpoints but may not have a guaranteed relationship.
 
-### Examples:
-- HER2/neu in breast cancer.
-- Tumor suppressors (e.g., p53).
+Cholesterol in heart disease is one example of a Type 2 biomarker—where elevated levels are correlated with increased risk of heart disease, but the relationship is not always present, as there are cases of heart disease with low cholesterol levels, and some patients do not develop heart disease despite high levels of cholesterol.
 
----
 
-## 3. Genomics and High-Throughput Screening Era (1990s–early 2000s)
-### Approach:
-- Gene expression via microarrays.
-- Proteomics via mass spectrometry.
+## Prognostic, Predictive, Pharmacodynamic and Surrogate End-point Biomarkers
+Another classification of biomarkers divides them into 4 classes: 
+Prognostic. 
+Predictive.
+Pharmacodynamic.
+Surrogate end-point.
 
-### Tools:
-- Affymetrix microarrays, MALDI-TOF.
 
-### Examples:
-- Breast cancer molecular subtyping.
-- Alzheimer’s and cardiovascular biomarker panels.
+**Prognostic Biomarkers**
 
----
+Prognostic (Greek) means “fore-knowing or foreseeing.” Prognostic biomarkers are the ones that suggest the likely outcome of a disease in an untreated individual.
 
-## 4. Bioinformatics and In Silico Era (Mid-2000s–2010s)
-### Approach:
-- Mining large public datasets (e.g., GEO, TCGA).
-- Statistical models and machine learning.
+An example of a prognostic biomarker is the mutation status of PIK3CA in HER-2 positive metastatic breast cancer, where individuals with mutated PIK3CA have been found to have lower rates of disease-free survival.
 
-### Tools:
-- R/Bioconductor, Cytoscape, DAVID, STRING.
+**Predictive Biomarkers**
 
-### Examples:
-- Gene signatures for cancer prognosis.
-- BCR-ABL in leukemia.
+Predictive biomarkers are used to identify those patients who are likely to have a positive clinical outcome in response to a given treatment. Thus, with the help of predictive biomarkers, it is possible to give a particular therapy to the patients for which it is most likely to be effective. 
 
----
+Erlotinib maintenance treatment is a therapeutic intervention used to treat advanced non–small-cell lung cancer. For patients with an EGFR mutation in the tumor, progression-free survival is significantly lower following erlotinib treatment than for those without an EGFR mutation receiving the same treatment. This makes EGFR mutation status a predictive biomarker for response to erlotinib treatment.
 
-## 5. Systems Biology and Multi-Omics Integration (2010s–2020s)
-### Approach:
-- Network and pathway modeling.
-- Integration of genomics, transcriptomics, epigenomics, etc.
+**Pharmacodynamic Biomarkers**
 
-### Tools:
-- iCluster, KEGG, Reactome, OmicsNet.
+These biomarkers help in determining the pharmacological effects of a drug and can inform if the treatment is working as expected. 
 
-### Examples:
-- PD-L1 and TMB as immunotherapy biomarkers.
-- Circulating tumor DNA (ctDNA).
+PI3K inhibitors are used to treat a variety of cancers. The PI3K signaling pathway includes multiple downstream targets, including AKT. On activation of the PI3K pathway, AKT becomes phosphorylated, and therefore phosphorylated AKT (pAKT) can act as a pharmacodynamic biomarker to confirm that Pi3K inhibitor treatment is indeed inhibiting the PI3K pathway. If pAKT levels drop, the inhibitor is working. 
 
----
+**Surrogate Biomarkers**
 
-## 6. AI and Precision Medicine Era (2020s–present)
-### Approach:
-- Deep learning for multi-modal data analysis.
-- Use of real-world evidence and EHR integration.
+Surrogate biomarkers are identical in all but name to type 2 biomarkers, so see the section above for more detail. Another example of a surrogate biomarker is blood pressure for cardiac disease. 
 
-### Tools:
-- AlphaFold, DeepVariant, AutoML.
+To be useful, surrogate markers should be an effective substitute for the clinical outcome, and effects on the substitute should predict clinical outcomes.
 
-### Examples:
-- Predictive biomarkers for CAR-T therapy.
-- AI-derived fusion gene detection.
-
----
-
-## BCR-ABL as a Case Study
-
-### Timeline:
-- **1960**: Philadelphia chromosome identified.
-- **1985**: BCR-ABL fusion gene discovered as the oncogenic driver of CML.
-- **2001**: FDA approval of Imatinib (Gleevec) as the first targeted therapy.
-- **2000s–2020s**: In silico tools used to:
-- Predict resistance mutations.
-- Model protein structure and drug interactions.
-- Analyze single-cell expression and residual disease.
-
-### Significance:
-- First molecular biomarker to lead to a successful targeted therapy.
-- Catalyst for bioinformatics and computational modeling in oncology.
-
----
-
-## Summary Table
-
-| Era | Main Method | Key Features | Examples |
-|------|-------------|----------------|----------|
-| Pre-1970s | Clinical/Biochemical | Observational, assays | Glucose, ALT, PSA |
-| 1970s–1980s | Molecular Biology | Blotting, antibodies | p53, HER2 |
-| 1990s–2000s | Genomics/Proteomics | Microarrays, MS | Gene signatures, cancer subtypes |
-| 2000s–2010s | In Silico/Bioinformatics | Public data mining, ML | BCR-ABL, TCGA biomarkers |
-| 2010s–2020s | Systems Biology | Pathways, multi-omics | Immune biomarkers, ctDNA |
-| 2020s–Now | AI/Precision Medicine | Deep learning, EHR + omics | Multi-modal, predictive markers 
+However, there is a possibility, because the biomarker is just a surrogate, that the effect of pharmacological therapeutics on the surrogate may not affect the outcome, limiting its usefulness.
