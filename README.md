@@ -66,3 +66,12 @@ Surrogate biomarkers are identical in all but name to type 2 biomarkers, so see 
 To be useful, surrogate markers should be an effective substitute for the clinical outcome, and effects on the substitute should predict clinical outcomes.
 
 However, there is a possibility, because the biomarker is just a surrogate, that the effect of pharmacological therapeutics on the surrogate may not affect the outcome, limiting its usefulness.
+
+**SPECIFIC CASE STUDY: Identification of BCR-ABL as a driver of CML**
+
+The identification of the Philadelphia chromosome in cells from individuals with chronic myelogenous leukemia (CML) led to the recognition that the BCR-ABL tyrosine kinase causes CML.
+
+This in turn led to the development of imatinib mesylate, a clinically successful inhibitor of the BCR-ABL kinase.
+
+This was the first human cancer in which a consistent genetic abnormality was demonstrated to cause the disease.
+
