@@ -110,6 +110,8 @@ Key Insight: The fusion protein acts like a switch that is stuck "on," driving c
 
 -> **Network Coverage:** Based on these imputs, the network is to be built
 
+-> **Validation** Literature validation of the network created.
+
 
 ## Datasets come across that can help with the scope of the project:
 
@@ -139,5 +141,13 @@ Does combining A + B improve diagnosis?
 Does adding clinical features (age, symptoms) improve performance?
 
 https://research.fredhutch.org/diagnostic-biomarkers-center/en/datasets.html 
+
+## Project plan and status:
+
+**Finalising a pathway:**
+Pathway selected: HR Pathway
+Reasoning: Knowledge about DNA damage agents and the different DNA repair mechanisms.
+Biomarkers from HR pathway genes can signal DNA repair proficiency, tumor aggressiveness, or therapeutic vulnerabilities.
+Understanding gene contributing to genomic stability.
 
 
