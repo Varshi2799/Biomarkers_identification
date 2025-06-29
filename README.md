@@ -150,4 +150,32 @@ Reasoning: Knowledge about DNA damage agents and the different DNA repair mechan
 Biomarkers from HR pathway genes can signal DNA repair proficiency, tumor aggressiveness, or therapeutic vulnerabilities.
 Understanding gene contributing to genomic stability.
 
+**Finalising the list of genes**
+
+## Homologous Recombination (HR) Pathway Gene List
+
+| **Gene**   | **Functionality in HR Pathway** |
+|------------|----------------------------------|
+| **ATM**    | A kinase rapidly activated by DNA double-strand breaks, initiating the HR repair response via phosphorylation of key repair proteins. |
+| **ATR**    | A sensor kinase activated by replication stress and single-stranded DNA that stabilizes stalled replication forks and promotes HR repair. |
+| **ATRX**   | A chromatin remodeler implicated in HR through facilitating accessibility of repair factors at damaged heterochromatic regions. |
+| **BARD1**  | Forms a heterodimer with BRCA1, stabilizing it and enhancing its E3 ubiquitin ligase activity essential for HR signaling and repair. |
+| **BRCA1**  | Orchestrates HR by promoting DNA end resection and recruiting PALB2-BRCA2-RAD51 to DNA damage sites. |
+| **BRCA2**  | Directly loads RAD51 onto single-stranded DNA at resected DSBs to initiate strand invasion and homologous pairing. |
+| **CHEK1**  | A checkpoint kinase downstream of ATR that regulates cell cycle arrest and supports HR by stabilizing replication forks. |
+| **CHEK2**  | Acts downstream of ATM to mediate cell cycle arrest and repair initiation, with some role in HR signaling. |
+| **MRE11**  | Part of the MRN complex, initiates DNA end resection, a critical first step in HR repair of DSBs. |
+| **NBN**    | Regulatory component of the MRN complex, helps recruit ATM and coordinate DNA damage signaling and resection. |
+| **PALB2**  | Connects BRCA1 and BRCA2, acting as a scaffold that recruits BRCA2 and RAD51 to DNA damage sites for HR. |
+| **RAD21**  | A cohesin subunit that maintains sister chromatid cohesion, facilitating the template alignment necessary for HR. |
+| **RAD50**  | Structural component of the MRN complex, tethers DNA ends and cooperates in resection and HR initiation. |
+| **RAD51**  | Central recombinase that mediates strand invasion and homologous pairing during HR. |
+| **RAD51B** | A RAD51 paralog that forms complexes aiding in RAD51 filament stabilization and HR efficiency. |
+| **RAD51C** | Forms complexes with other RAD51 paralogs and is essential for RAD51 filament formation and resolution of HR intermediates. |
+| **RAD51D** | Participates in RAD51 paralog complexes, contributing to RAD51 filament assembly and strand invasion during HR. |
+| **RAD52**  | Mediates annealing of complementary DNA strands and serves as a backup to BRCA2 in RAD51 loading, especially in BRCA-deficient cells. |
+| **RAD54L** | A DNA-dependent ATPase that promotes branch migration and chromatin remodeling during late stages of HR. |
+| **WRN**    | A RecQ helicase that facilitates DNA end processing and resolution of recombination intermediates, ensuring HR fidelity. |
+
+
 
