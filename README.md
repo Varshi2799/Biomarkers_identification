@@ -183,4 +183,25 @@ Understanding gene contributing to genomic stability.
 |------------------------|-------------|
 | **Ovarian Cancer** | - Approximately 50% of high-grade serous ovarian cancer (HGSOC) cases show defects in homologous recombination (HR) repair mechanisms.<br>- These defects primarily arise due to mutations in key HR genes, most notably **BRCA1** and **BRCA2**.<br>- Germline or somatic mutations in **BRCA1/2** are common in HGSOC. |
 
+*Self learning: Concept of correlation*
+## Correlation Overview
+
+| **Concept** | **Explanation** |
+|-------------|-----------------|
+| **What is correlation?** | Correlation is a statistical measure that describes the strength and direction of a relationship between two variables. Correlations are useful for describing simple relationships among data.<br><br>Correlation determines:<br>→ Strength of relationship<br>→ Direction (positive or negative) |
+| **Types** | - **Positive linear** → upward slope<br>- **Negative linear** → downward slope<br>- **No correlation** → random cloud |
+| **What is Pearson correlation?** | Measures linear relationship.<br>Assumes data is continuous, normally distributed, and homoscedastic (equal variance). |
+| **What is Spearman's correlation?** | Non-parametric.<br>Based on ranked data; captures monotonic (not necessarily linear) relationships. |
+| **Correlation coefficient (r)** | A number between -1 and +1 indicating the degree of relationship between two variables. |
+| **Positive correlation** | As one variable increases, the other tends to increase. |
+| **Negative correlation** | As one variable increases, the other tends to decrease. |
+| **Zero correlation** | No linear relationship. |
+| **p-value** | The p-value tells you how likely it is that your observed correlation happened by chance if there were actually no real relationship. |
+| **r-value** | Strength + direction of the correlation. |
+| **p-value (again)** | Statistical significance of r. |
+| **Correlation** | How variables move together. |
+| **Pearson** | Measures linear correlation. |
+| **Spearman** | Measures rank-based monotonic relationship. |
+| **Causation** | A causes B (not implied by correlation!). |
+
 
