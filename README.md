@@ -177,5 +177,10 @@ Understanding gene contributing to genomic stability.
 | **RAD54L** | A DNA-dependent ATPase that promotes branch migration and chromatin remodeling during late stages of HR. |
 | **WRN**    | A RecQ helicase that facilitates DNA end processing and resolution of recombination intermediates, ensuring HR fidelity. |
 
+## Indication and Rationale
+
+| **Indication Chosen** | **Reasons** |
+|------------------------|-------------|
+| **Ovarian Cancer** | - Approximately 50% of high-grade serous ovarian cancer (HGSOC) cases show defects in homologous recombination (HR) repair mechanisms.<br>- These defects primarily arise due to mutations in key HR genes, most notably **BRCA1** and **BRCA2**.<br>- Germline or somatic mutations in **BRCA1/2** are common in HGSOC. |
 
 
