@@ -277,5 +277,95 @@ df_1.T: This transposes the DataFrame df_1. Since df_1 has genes as rows and sam
 .corr(): This method is called on the transposed DataFrame. By default, for DataFrames of numerical data, it calculates the pairwise Pearson correlation coefficient for each pair of columns (which are now the genes from the original DataFrame).
 The result is a correlation matrix where each cell (i, j) contains the Pearson correlation coefficient between gene i and gene j across all samples. This matrix can help you understand how the expression levels of the selected genes relate to each other.
 
+Generated results:
+| Hugo Symbol | BRCA1   | BRCA2   | RAD51  | RAD52  | RAD54L |
+|-------------|---------|---------|--------|--------|--------|
+| **BRCA1**   | 1.000   | 0.380   | 0.280  | 0.178  | 0.262  |
+| **BRCA2**   | 0.380   | 1.000   | 0.456  | 0.383  | 0.493  |
+| **RAD51**   | 0.280   | 0.456   | 1.000  | 0.785  | 0.872  |
+| **RAD52**   | 0.178   | 0.383   | 0.785  | 1.000  | 0.812  |
+| **RAD54L**  | 0.262   | 0.493   | 0.872  | 0.812  | 1.000  |
 
+**STEP7: Generation of p and q values**
+
+TERMINAL COMMAND 8: # Function to calculate pairwise p-values
+def calculate_pvalues(df):
+    df = df.dropna()._get_numeric_data()
+    cols = df.columns
+    pvalues_matrix = pd.DataFrame(index=cols, columns=cols)
+    for i in range(len(cols)):
+        for j in range(i, len(cols)):
+            if i == j:
+                pvalues_matrix.iloc[i, j] = 0.0
+            else:
+                corr, p_value = pearsonr(df[cols[i]], df[cols[j]])
+                pvalues_matrix.iloc[i, j] = p_value
+                pvalues_matrix.iloc[j, i] = p_value
+    return pvalues_matrix
+
+# Calculate the p-values for the correlation matrix
+p_values_matrix = calculate_pvalues(df_1.T)
+display(p_values_matrix)
+
+EXPLANATION: This code snippet defines and uses a function to calculate the pairwise p-values for a given DataFrame.
+calculate_pvalues(df) function:
+Takes a DataFrame df as input.
+df.dropna()._get_numeric_data(): This part first removes any rows with missing values (dropna()) and then selects only the numeric columns from the DataFrame (_get_numeric_data()). This is important because correlation and p-value calculations require numeric data.
+cols = df.columns: Gets the names of the columns (genes in this case) after handling missing values and non-numeric data.
+pvalues_matrix = pd.DataFrame(index=cols, columns=cols): Creates an empty DataFrame with the same row and column names as the numeric columns of the input DataFrame. This will store the calculated p-values.
+The nested for loops iterate through all unique pairs of columns (genes).
+if i == j:: If it's the same gene (diagonal of the matrix), the p-value is set to 0.0.
+else: corr, p_value = pearsonr(df[cols[i]], df[cols[j]]): For different genes, it calculates the Pearson correlation coefficient (corr) and the corresponding p-value (p_value) using the pearsonr function from scipy.stats.
+pvalues_matrix.iloc[i, j] = p_value and pvalues_matrix.iloc[j, i] = p_value: Stores the calculated p-value in both the upper and lower triangles of the pvalues_matrix (since the p-value for the correlation between gene A and gene B is the same as between gene B and gene A).
+return pvalues_matrix: Returns the DataFrame containing the pairwise p-values.
+Calculating and Displaying p-values:
+p_values_matrix = calculate_pvalues(df_1.T): Calls the calculate_pvalues function with the transposed df_1 DataFrame. As explained before, we transpose df_1 so that the genes are columns for the correlation calculation.
+display(p_values_matrix): Displays the resulting p-value matrix.
+In summary, this code calculates the statistical significance (p-values) of the pairwise correlations between the genes in your filtered dataset. These p-values help determine if the observed correlations are statistically significant or likely due to random chance.
+
+Generated P value table: ## P-Value Matrix
+
+| Hugo Symbol | BRCA1    | BRCA2 | RAD51   | RAD52   | RAD54L  |
+|-------------|----------|-------|---------|---------|---------|
+| **BRCA1**   | 0.0      | 0.0   | 0.000001| 0.00188 | 0.000004|
+| **BRCA2**   | 0.0      | 0.0   | 0.0     | 0.0     | 0.0     |
+| **RAD51**   | 0.000001 | 0.0   | 0.0     | 0.0     | 0.0     |
+| **RAD52**   | 0.00188  | 0.0   | 0.0     | 0.0     | 0.0     |
+| **RAD54L**  | 0.000004 | 0.0   | 0.0     | 0.0     | 0.0     |
+
+**Generation of q values**
+TERMINAL COMMAND 9: from statsmodels.stats.multitest import multipletests
+
+# Extract the p-values from the matrix and flatten them
+pvalues_flat = p_values_matrix.values.flatten()
+
+# Apply the Benjamini-Hochberg correction
+reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh')
+
+# Reshape the q-values back into a matrix
+q_values_matrix = pd.DataFrame(qvalues_flat.reshape(p_values_matrix.shape),
+                               index=p_values_matrix.index,
+                               columns=p_values_matrix.columns)
+
+display(q_values_matrix)
+
+EXPLANATION: 
+From statsmodels.stats.multitest import multipletests: This line imports the multipletests function from the statsmodels library. This function is specifically designed to apply various multiple comparison correction methods.
+pvalues_flat = p_values_matrix.values.flatten():
+p_values_matrix.values: This accesses the underlying NumPy array of the p_values_matrix DataFrame.
+.flatten(): This method converts the 2D array of p-values into a 1D array (a single list of all p-values). Multiple comparison correction functions typically expect a flat list of p-values as input.
+reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh'):
+This is the core of the multiple comparison correction.
+multipletests(pvalues_flat, method='fdr_bh'): This calls the multipletests function with your flattened list of p-values (pvalues_flat).
+method='fdr_bh': This specifies the correction method to use, which is the Benjamini-Hochberg (BH) method. The BH method controls the False Discovery Rate (FDR), which is the expected proportion of rejected null hypotheses that are actually true (Type I errors).
+The function returns four values:
+reject: A boolean array indicating whether each corresponding p-value is rejected after correction (i.e., considered statistically significant).
+qvalues_flat: The adjusted p-values, also known as q-values, in a flattened 1D array.
+_, _: The other two returned values are less commonly used in this context and are assigned to _ (a convention to indicate that these values are being ignored).
+q_values_matrix = pd.DataFrame(qvalues_flat.reshape(p_values_matrix.shape), index=p_values_matrix.index, columns=p_values_matrix.columns):
+qvalues_flat.reshape(p_values_matrix.shape): This reshapes the flattened array of q-values back into the original matrix shape of the p_values_matrix.
+pd.DataFrame(...): This creates a new pandas DataFrame from the reshaped q-values.
+index=p_values_matrix.index and columns=p_values_matrix.columns: This assigns the row and column names from the original p_values_matrix to the new q_values_matrix, making it easy to see which q-value corresponds to which gene pair.
+display(q_values_matrix): This displays the resulting DataFrame containing the q-values.
+In summary, this code takes the raw p-values from all your pairwise gene correlation tests, adjusts them using the Benjamini-Hochberg method to account for the fact that you performed multiple tests, and then presents these adjusted p-values (q-values) in a matrix format. Q-values provide a more reliable measure of statistical significance when conducting multiple comparisons.
 
