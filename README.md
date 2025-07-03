@@ -112,6 +112,8 @@ Key Insight: The fusion protein acts like a switch that is stuck "on," driving c
 
 -> **Validation** Literature validation of the network created.
 
+-> **Identification of hub genes** Based on the network created, the hub genes are identified.
+
 
 ## Datasets come across that can help with the scope of the project:
 
@@ -203,5 +205,77 @@ Understanding gene contributing to genomic stability.
 | **Pearson** | Measures linear correlation. |
 | **Spearman** | Measures rank-based monotonic relationship. |
 | **Causation** | A causes B (not implied by correlation!). |
+
+# Test case : Currently we are retriving data from cbioportal and analysing the mRNA expression data of the same. For the present scenario, I am taking into consideration 5 HR genes and trying to generate the correlation matrix, p,q and a network between them.
+
+**STEP1 : Data retrieval from cbioportal**
+-> Go to Cbioportal and type the indication name and choose the dataset to be used for further analysis
+-> Click on copy link and paste it in the terminal
+
+TERMINAL COMMAND 1: *!wget https://cbioportal-datahub.s3.amazonaws.com/ov_tcga_pan_can_atlas_2018.tar.gz*
+EXPLANATION: This code uses the wget command to download a file from a specified URL. This code downloads a compressed data archive from the provided URL to the Colab environment.
+
+TERMINAL COMMAND 2: *!tar -xvzf ov_tcga_pan_can_atlas_2018.tar.gz*
+EXPLANATION: This code snippet uses the tar command to extract the contents of a gzipped tar archive that was previously downloaded.
+-xvzf: These are options passed to the tar command:
+x: Extract files from an archive.
+v: Verbose, list files as they are extracted.
+z: Decompress the archive using gzip. This option is used because the file has a .gz extension, indicating it was compressed with gzip.
+f: Specify the archive file name.
+
+In summary, this code extracts the files and directories contained within the ov_tcga_pan_can_atlas_2018.tar.gz file into the current directory. This makes the data files within the archive accessible for further processing
+
+**STEP2: Choosing the appropriate file and loading the contents into the pandas dataframe**
+-> The appropriate mRNA expression file is taken and the data from the same is being fit into the pandas dataframe for further analysis
+-> File chosen in this scenario:
+
+TERMINAL COMMAND 3: *import pandas as pd
+import numpy as np
+from scipy.stats import pearsonr
+import scipy.stats as stats
+
+# Path to your uploaded file
+file_path = "ov_tcga_pan_can_atlas_2018/data_mrna_seq_v2_rsem.txt"
+
+# Load the file, skipping comment lines
+df = pd.read_csv(file_path, sep="\t", comment='#')* 
+
+EXPLANATION: 
+-> Imports libraries: It imports pandas (as pd) for data manipulation, numpy (as np) for numerical operations, and specific statistical functions (pearsonr and the stats module) from scipy.
+-> Sets the file path: It defines the file_path variable to indicate where the data file is located.
+-> Reads the data: It uses pd.read_csv() to load the data from the specified file.
+-> sep="\t" tells it that columns in the file are separated by tabs.
+-> comment='#' tells it to ignore lines that start with a '#' symbol.
+-> The loaded data is stored in a pandas DataFrame named df.
+
+TERMINAL COMMAND 4: df
+EXPLANATION: Visualise the dataframe using command df
+
+**STEP3: Add in the genes of interest and find the gene and sample details in relation to the gene in the dataframe**
+TERMINAL COMMAND: *gene_list = ["BRCA1","BRCA2","RAD51","RAD52","RAD54L"]*
+This line creates a Python list and assigns it to a variable named gene_list.
+gene_list =: This assigns the list created on the right side to the variable named gene_list.
+[...]: The square brackets indicate that this is a Python list.
+"BRCA1","BRCA2","RAD51","RAD52","RAD54L": These are the elements of the list. Each element is a string (indicated by the quotes) representing the name of a gene. The elements are separated by commas.
+
+**STEP4: Retrieving data specific to the gene list from the original dataframe.**
+
+TERMINAL COMMAND 5: *df_1 = df.loc[df['Hugo_Symbol'].isin(gene_list)]*
+EXPLANATION: It filters the main DataFrame (df) to keep only the rows where the 'Hugo_Symbol' is in your gene_list.
+This line filters the DataFrame df to create a new DataFrame called df_1. It selects only the rows where the value in the 'Hugo_Symbol' column is present in the list of genes specified by the gene_list variable.
+In essence, it's extracting the rows corresponding to the genes you are interested in from the original DataFrame.
+
+**STEP5: Set Index**
+TERMINAL COMMAND 6: *df_1 = df_1.set_index('Hugo_Symbol')*
+EXPLANATION: This code snippet uses the set_index() method from the pandas library to set the 'Hugo_Symbol' column as the index of the df_1 DataFrame.
+Setting the index can be useful for quickly accessing rows based on gene symbols or for aligning data with other DataFrames that share the same index.
+
+**STEP6: Correlation analysis**
+TERMINAL COMMAND 7: *df_1.T.corr()*
+EXPLANATION: This code snippet calculates the pairwise Pearson correlation between the rows of the DataFrame df_1.
+df_1.T: This transposes the DataFrame df_1. Since df_1 has genes as rows and samples as columns, transposing it makes samples the rows and genes the columns. This is necessary because the .corr() method calculates correlations between columns.
+.corr(): This method is called on the transposed DataFrame. By default, for DataFrames of numerical data, it calculates the pairwise Pearson correlation coefficient for each pair of columns (which are now the genes from the original DataFrame).
+The result is a correlation matrix where each cell (i, j) contains the Pearson correlation coefficient between gene i and gene j across all samples. This matrix can help you understand how the expression levels of the selected genes relate to each other.
+
 
 
