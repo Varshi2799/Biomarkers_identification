@@ -206,7 +206,7 @@ Understanding gene contributing to genomic stability.
 | **Spearman** | Measures rank-based monotonic relationship. |
 | **Causation** | A causes B (not implied by correlation!). |
 
-# Test case : Currently we are retriving data from cbioportal and analysing the mRNA expression data of the same. For the present scenario, I am taking into consideration 5 HR genes and trying to generate the correlation matrix, p,q and a network between them.
+*Test case : Currently we are retriving data from cbioportal and analysing the mRNA expression data of the same. For the present scenario, I am taking into consideration 5 HR genes and trying to generate the correlation matrix, p,q and a network between them.*
 
 **STEP1 : Data retrieval from cbioportal**
 -> Go to Cbioportal and type the indication name and choose the dataset to be used for further analysis
