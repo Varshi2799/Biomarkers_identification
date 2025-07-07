@@ -491,15 +491,26 @@ In summary, this code calculates the statistical significance (p-values) of the 
 from statsmodels.stats.multitest import multipletests
 
 #Extract the p-values from the matrix and flatten them
+
+
 pvalues_flat = p_values_matrix.values.flatten()
 
 #Apply the Benjamini-Hochberg correction
+
+
 reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh')
 
 #Reshape the q-values back into a matrix
+
+
 q_values_matrix = pd.DataFrame(qvalues_flat.reshape(p_values_matrix.shape),
+
+
                                index=p_values_matrix.index,
+
+
                                columns=p_values_matrix.columns)
+
 
 display(q_values_matrix)
 
@@ -536,4 +547,138 @@ display(q_values_matrix): This line displays the resulting DataFrame containing 
 
 In essence, this code adjusts the p-values obtained from the pairwise correlations to account for the fact that you performed multiple comparisons. The Benjamini-Hochberg correction helps control the false discovery rate, which is the expected proportion of rejected null hypotheses that are actually true (Type I errors).
 
+
+### Generated Q value matrix:
+| Hugo_Symbol | BRCA1   | BRCA2 | RAD51   | RAD52   | RAD54L  |
+|-------------|---------|-------|---------|---------|---------|
+| **BRCA1**   | 0.0     | 0.0   | 1e-6    | 0.00188 | 5e-6    |
+| **BRCA2**   | 0.0     | 0.0   | 0.0     | 0.0     | 0.0     |
+| **RAD51**   | 1e-6    | 0.0   | 0.0     | 0.0     | 0.0     |
+| **RAD52**   | 0.00188 | 0.0   | 0.0     | 0.0     | 0.0     |
+| **RAD54L**  | 5e-6    | 0.0   | 0.0     | 0.0     | 0.0     |
+
+
+## STEP 9: To generate a pairwise table consisting of p,q,edges, direction of correlation
+
+### TERMINAL COMMAND 10:
+
+#Get the correlation matrix from the previous step
+correlation_matrix = df_1.T.corr()
+
+#Initialize lists to store data for the table
+gene1_list = []
+gene2_list = []
+p_value_list = []
+q_value_list = []
+edges_list = []
+strength_list = []
+
+#Iterate through the matrices to extract pairwise data
+for i in range(len(correlation_matrix.columns)):
+    for j in range(i + 1, len(correlation_matrix.columns)): # Start from i+1 to avoid duplicates and self-comparisons
+        gene1 = correlation_matrix.columns[i]
+        gene2 = correlation_matrix.columns[j]
+        correlation = correlation_matrix.iloc[i, j]
+        p_value = p_values_matrix.iloc[i, j]
+        q_value = q_values_matrix.iloc[i, j]
+
+        #Determine the edge direction
+        edge = "Positive" if correlation > 0 else ("Negative" if correlation < 0 else "No relationship")
+
+        #Determine the strength (absolute value of correlation)
+        strength = abs(correlation)
+
+        #Append data to lists
+        gene1_list.append(gene1)
+        gene2_list.append(gene2)
+        p_value_list.append(p_value)
+        q_value_list.append(q_value)
+        edges_list.append(edge)
+        strength_list.append(strength)
+
+#Create the summary DataFrame
+summary_df = pd.DataFrame({
+    'Gene 1': gene1_list,
+    'Gene 2': gene2_list,
+    'P value': p_value_list,
+    'Q value': q_value_list,
+    'Edges': edges_list,
+    'Strength': strength_list
+})
+
+display(summary_df)
+
+
+EXPLANATION: 
+
+This code cell calculates pairwise correlations between the genes in df_1, determines the direction and strength of these correlations, and stores this information in a summary DataFrame.
+
+Here's a breakdown:
+
+correlation_matrix = df_1.T.corr(): This line calculates the pairwise Pearson correlation coefficients for the genes in df_1.
+
+
+df_1.T transposes the DataFrame so that genes are columns and samples are rows, which is the correct orientation for calculating correlations between genes across samples.
+.corr() computes the pairwise correlation.
+
+
+Initialization of lists: Several empty lists are initialized to store the data that will populate the summary table: gene1_list, gene2_list, p_value_list, q_value_list, edges_list, and strength_list.
+
+
+Iterating through the matrices: The code uses nested loops to iterate through the upper triangle of the correlation_matrix.
+
+
+The outer loop iterates through each column index i.
+
+
+The inner loop iterates through column indices j starting from i + 1. This ensures that each gene pair is considered only once and avoids self-comparisons (e.g., BRCA1 with BRCA1).
+
+
+Extracting data for each gene pair: Inside the inner loop, for each gene pair (gene1, gene2):
+
+
+correlation: The correlation coefficient between gene1 and gene2 is retrieved from the correlation_matrix.
+
+
+p_value: The corresponding p-value is retrieved from the p_values_matrix.
+
+
+q_value: The corresponding q-value (adjusted p-value) is retrieved from the q_values_matrix.
+
+
+Determining edge direction: An if-else statement determines the direction of the relationship (edge) based on the sign of the correlation: "Positive" if the correlation is greater than 0, "Negative" if less than 0, and "No relationship" if it's 0.
+
+
+Determining strength: The strength of the relationship is calculated as the absolute value of the correlation.
+
+
+Appending data to lists: The extracted gene1, gene2, p_value, q_value, edge, and strength are appended to their respective lists.
+
+
+Creating the summary DataFrame: After iterating through all unique gene pairs, a pandas DataFrame called summary_df is created from the populated lists. This DataFrame provides a clear summary of the pairwise relationships between the genes.
+
+
+display(summary_df): The summary_df is displayed.
+
+
+Generating plots: The remaining lines of code generate various plots using the summary_df to visualize the distributions of p-values, q-values, and strength, as well as relationships between these values and the frequency of genes in the summary.
+
+
+In summary, this cell systematically analyzes the pairwise correlations between the selected genes, quantifies the significance of these correlations using p-values and q-values, and prepares a summary table and visualizations to present these findings. The error messages in the output indicate issues with how the plotting functions are being called, likely related to how seaborn handles palettes and the structure of the data being plotted in some cases.
+
+
+### GENERATED RESULTS:
+
+| Gene 1 | Gene 2 | P value       | Q value       | Edges    | Strength |
+|--------|--------|---------------|---------------|----------|----------|
+| BRCA1  | BRCA2  | 8.444544e-12  | 1.111124e-11  | Positive | 0.380403 |
+| BRCA1  | RAD51  | 7.815269e-07  | 9.303892e-07  | Positive | 0.280175 |
+| BRCA1  | RAD52  | 1.879694e-03  | 1.879694e-03  | Positive | 0.178479 |
+| BRCA1  | RAD54L | 4.150021e-06  | 4.510893e-06  | Positive | 0.261801 |
+| BRCA2  | RAD51  | 7.100344e-17  | 1.183391e-16  | Positive | 0.456169 |
+| BRCA2  | RAD52  | 6.071827e-12  | 8.929157e-12  | Positive | 0.382827 |
+| BRCA2  | RAD54L | 8.030265e-20  | 1.544282e-19  | Positive | 0.492794 |
+| RAD51  | RAD52  | 3.686423e-64  | 8.378234e-64  | Positive | 0.785078 |
+| RAD51  | RAD54L | 1.253399e-94  | 4.476426e-94  | Positive | 0.871709 |
+| RAD52  | RAD54L | 7.435198e-72  | 2.065333e-71  | Positive | 0.811882 |
 
