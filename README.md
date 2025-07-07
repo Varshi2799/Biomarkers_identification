@@ -183,7 +183,7 @@ Understanding gene contributing to genomic stability.
 
 | **Indication Chosen** | **Reasons** |
 |------------------------|-------------|
-| **Ovarian Cancer** | - Approximately 50% of high-grade serous ovarian cancer (HGSOC) cases show defects in homologous recombination (HR) repair mechanisms.<br>- These defects primarily arise due to mutations in key HR genes, most notably **BRCA1** and **BRCA2**.<br>- Germline or somatic mutations in **BRCA1/2** are common in HGSOC. |
+| **High Grade Serous Ovarian Cancer** | - Approximately 50% of high-grade serous ovarian cancer (HGSOC) cases show defects in homologous recombination (HR) repair mechanisms.<br>- These defects primarily arise due to mutations in key HR genes, most notably **BRCA1** and **BRCA2**.<br>- Germline or somatic mutations in **BRCA1/2** are common in HGSOC. |
 
 *Self learning: Concept of correlation*
 ## Correlation Overview
@@ -206,78 +206,170 @@ Understanding gene contributing to genomic stability.
 | **Spearman** | Measures rank-based monotonic relationship. |
 | **Causation** | A causes B (not implied by correlation!). |
 
-*Test case : Currently we are retriving data from cbioportal and analysing the mRNA expression data of the same. For the present scenario, I am taking into consideration 5 HR genes and trying to generate the correlation matrix, p,q and a network between them.*
+# Test case
 
-**STEP1 : Data retrieval from cbioportal**
--> Go to Cbioportal and type the indication name and choose the dataset to be used for further analysis
--> Click on copy link and paste it in the terminal
+Currently we are retriving data from cbioportal and analysing the mRNA expression data of the same. For the present scenario, I am taking into consideration 5 HR genes and trying to generate the correlation matrix, p,q and a network between them.
 
-TERMINAL COMMAND 1: *!wget https://cbioportal-datahub.s3.amazonaws.com/ov_tcga_pan_can_atlas_2018.tar.gz*
-EXPLANATION: This code uses the wget command to download a file from a specified URL. This code downloads a compressed data archive from the provided URL to the Colab environment.
+## STEP1 : Data retrieval from cbioportal
 
-TERMINAL COMMAND 2: *!tar -xvzf ov_tcga_pan_can_atlas_2018.tar.gz*
-EXPLANATION: This code snippet uses the tar command to extract the contents of a gzipped tar archive that was previously downloaded.
--xvzf: These are options passed to the tar command:
-x: Extract files from an archive.
-v: Verbose, list files as they are extracted.
-z: Decompress the archive using gzip. This option is used because the file has a .gz extension, indicating it was compressed with gzip.
-f: Specify the archive file name.
+* Go to Cbioportal and type the indication name and choose the dataset to be used for further analysis  
+* Click on copy link and paste it in the terminal
 
-In summary, this code extracts the files and directories contained within the ov_tcga_pan_can_atlas_2018.tar.gz file into the current directory. This makes the data files within the archive accessible for further processing
+### TERMINAL COMMAND 1: *!wget https://cbioportal-datahub.s3.amazonaws.com/ov_tcga_pan_can_atlas_2018.tar.gz*
 
-**STEP2: Choosing the appropriate file and loading the contents into the pandas dataframe**
--> The appropriate mRNA expression file is taken and the data from the same is being fit into the pandas dataframe for further analysis
--> File chosen in this scenario:
+EXPLANATION:
 
-TERMINAL COMMAND 3: *import pandas as pd
-import numpy as np
-from scipy.stats import pearsonr
-import scipy.stats as stats
+-> This code uses the wget command to download a file from a specified URL. This code downloads a compressed data archive from the provided URL to the Colab environment.
 
-# Path to your uploaded file
-file_path = "ov_tcga_pan_can_atlas_2018/data_mrna_seq_v2_rsem.txt"
-
-# Load the file, skipping comment lines
-df = pd.read_csv(file_path, sep="\t", comment='#')* 
+### TERMINAL COMMAND 2: *!tar -xvzf ov_tcga_pan_can_atlas_2018.tar.gz*
 
 EXPLANATION: 
+
+-> This code snippet uses the tar command to extract the contents of a gzipped tar archive that was previously downloaded.
+
+
+-xvzf: These are options passed to the tar command:
+
+
+x: Extract files from an archive.
+
+
+v: Verbose, list files as they are extracted.
+
+
+z: Decompress the archive using gzip. This option is used because the file has a .gz extension, indicating it was compressed with gzip.
+
+
+f: Specify the archive file name.
+
+
+-> In summary, this code extracts the files and directories contained within the ov_tcga_pan_can_atlas_2018.tar.gz file into the current directory. This makes the data files within the archive accessible for further processing
+
+
+
+## STEP2: Choosing the appropriate file and loading the contents into the pandas dataframe
+
+
+-> The appropriate mRNA expression file is taken and the data from the same is being fit into the pandas dataframe for further analysis
+
+-> File chosen in this scenario:
+
+
+### TERMINAL COMMAND 3: 
+
+import pandas as pd
+
+
+import numpy as np
+
+
+from scipy.stats import pearsonr
+
+
+import scipy.stats as stats
+
+-> Path to your uploaded file
+
+file_path = "ov_tcga_pan_can_atlas_2018/data_mrna_seq_v2_rsem.txt"
+
+-> Load the file, skipping comment lines
+
+df = pd.read_csv(file_path, sep="\t", comment='#')
+
+
+EXPLANATION:
+ 
 -> Imports libraries: It imports pandas (as pd) for data manipulation, numpy (as np) for numerical operations, and specific statistical functions (pearsonr and the stats module) from scipy.
+
+
 -> Sets the file path: It defines the file_path variable to indicate where the data file is located.
+
+
 -> Reads the data: It uses pd.read_csv() to load the data from the specified file.
+
+
 -> sep="\t" tells it that columns in the file are separated by tabs.
+
+
 -> comment='#' tells it to ignore lines that start with a '#' symbol.
+
+
 -> The loaded data is stored in a pandas DataFrame named df.
 
-TERMINAL COMMAND 4: df
+
+### TERMINAL COMMAND 4: df
+
+
 EXPLANATION: Visualise the dataframe using command df
 
-**STEP3: Add in the genes of interest and find the gene and sample details in relation to the gene in the dataframe**
-TERMINAL COMMAND: *gene_list = ["BRCA1","BRCA2","RAD51","RAD52","RAD54L"]*
+
+## STEP3: Add in the genes of interest and find the gene and sample details in relation to the gene in the dataframe
+
+
+### TERMINAL COMMAND: *gene_list = ["BRCA1","BRCA2","RAD51","RAD52","RAD54L"]
+
+
+EXPLANATION:
 This line creates a Python list and assigns it to a variable named gene_list.
+
+
 gene_list =: This assigns the list created on the right side to the variable named gene_list.
+
+
 [...]: The square brackets indicate that this is a Python list.
+
+
 "BRCA1","BRCA2","RAD51","RAD52","RAD54L": These are the elements of the list. Each element is a string (indicated by the quotes) representing the name of a gene. The elements are separated by commas.
 
-**STEP4: Retrieving data specific to the gene list from the original dataframe.**
 
-TERMINAL COMMAND 5: *df_1 = df.loc[df['Hugo_Symbol'].isin(gene_list)]*
+## STEP4: Retrieving data specific to the gene list from the original dataframe
+
+
+### TERMINAL COMMAND 5: df_1 = df.loc[df['Hugo_Symbol'].isin(gene_list)]
+
+
 EXPLANATION: It filters the main DataFrame (df) to keep only the rows where the 'Hugo_Symbol' is in your gene_list.
+
+
 This line filters the DataFrame df to create a new DataFrame called df_1. It selects only the rows where the value in the 'Hugo_Symbol' column is present in the list of genes specified by the gene_list variable.
+
+
 In essence, it's extracting the rows corresponding to the genes you are interested in from the original DataFrame.
 
-**STEP5: Set Index**
-TERMINAL COMMAND 6: *df_1 = df_1.set_index('Hugo_Symbol')*
+
+## STEP5: Set Index
+
+
+### TERMINAL COMMAND 6: df_1 = df_1.set_index('Hugo_Symbol')
+
+
 EXPLANATION: This code snippet uses the set_index() method from the pandas library to set the 'Hugo_Symbol' column as the index of the df_1 DataFrame.
+
+
 Setting the index can be useful for quickly accessing rows based on gene symbols or for aligning data with other DataFrames that share the same index.
 
-**STEP6: Correlation analysis**
-TERMINAL COMMAND 7: *df_1.T.corr()*
-EXPLANATION: This code snippet calculates the pairwise Pearson correlation between the rows of the DataFrame df_1.
-df_1.T: This transposes the DataFrame df_1. Since df_1 has genes as rows and samples as columns, transposing it makes samples the rows and genes the columns. This is necessary because the .corr() method calculates correlations between columns.
-.corr(): This method is called on the transposed DataFrame. By default, for DataFrames of numerical data, it calculates the pairwise Pearson correlation coefficient for each pair of columns (which are now the genes from the original DataFrame).
-The result is a correlation matrix where each cell (i, j) contains the Pearson correlation coefficient between gene i and gene j across all samples. This matrix can help you understand how the expression levels of the selected genes relate to each other.
 
-Generated results:
+## STEP6: Correlation analysis
+
+
+## TERMINAL COMMAND 7: df_1.T.corr()
+
+
+EXPLANATION: 
+
+-> This code snippet calculates the pairwise Pearson correlation between the rows of the DataFrame df_1.
+
+
+-> df_1.T: This transposes the DataFrame df_1. Since df_1 has genes as rows and samples as columns, transposing it makes samples the rows and genes the columns. This is necessary because the .corr() method calculates correlations between columns.
+
+
+-> .corr(): This method is called on the transposed DataFrame. By default, for DataFrames of numerical data, it calculates the pairwise Pearson correlation coefficient for each pair of columns (which are now the genes from the original DataFrame).
+
+
+-> The result is a correlation matrix where each cell (i, j) contains the Pearson correlation coefficient between gene i and gene j across all samples. This matrix can help you understand how the expression levels of the selected genes relate to each other.
+
+
+## Generated results:
 | Hugo Symbol | BRCA1   | BRCA2   | RAD51  | RAD52  | RAD54L |
 |-------------|---------|---------|--------|--------|--------|
 | **BRCA1**   | 1.000   | 0.380   | 0.280  | 0.178  | 0.262  |
@@ -286,86 +378,94 @@ Generated results:
 | **RAD52**   | 0.178   | 0.383   | 0.785  | 1.000  | 0.812  |
 | **RAD54L**  | 0.262   | 0.493   | 0.872  | 0.812  | 1.000  |
 
-**STEP7: Generation of p and q values**
 
-TERMINAL COMMAND 8: # Function to calculate pairwise p-values
+## STEP7: Generation of p and q values
+
+
+### TERMINAL COMMAND 8: Function to calculate pairwise p-values
+
+
 def calculate_pvalues(df):
+
+
     df = df.dropna()._get_numeric_data()
+
+
     cols = df.columns
+
+
     pvalues_matrix = pd.DataFrame(index=cols, columns=cols)
+
+
     for i in range(len(cols)):
+
+
         for j in range(i, len(cols)):
+
+
             if i == j:
+
+
                 pvalues_matrix.iloc[i, j] = 0.0
+
+
             else:
+
+
                 corr, p_value = pearsonr(df[cols[i]], df[cols[j]])
+
+
                 pvalues_matrix.iloc[i, j] = p_value
+
+
                 pvalues_matrix.iloc[j, i] = p_value
+
+
     return pvalues_matrix
 
-# Calculate the p-values for the correlation matrix
+--> Calculate the p-values for the correlation matrix
+
+
 p_values_matrix = calculate_pvalues(df_1.T)
+
+
 display(p_values_matrix)
 
-EXPLANATION: This code snippet defines and uses a function to calculate the pairwise p-values for a given DataFrame.
-calculate_pvalues(df) function:
-Takes a DataFrame df as input.
+EXPLANATION: 
+
+calculate_pvalues(df) function: Takes a DataFrame df as input.
+
+
 df.dropna()._get_numeric_data(): This part first removes any rows with missing values (dropna()) and then selects only the numeric columns from the DataFrame (_get_numeric_data()). This is important because correlation and p-value calculations require numeric data.
+
+
 cols = df.columns: Gets the names of the columns (genes in this case) after handling missing values and non-numeric data.
+
+
 pvalues_matrix = pd.DataFrame(index=cols, columns=cols): Creates an empty DataFrame with the same row and column names as the numeric columns of the input DataFrame. This will store the calculated p-values.
+
+
 The nested for loops iterate through all unique pairs of columns (genes).
+
+
 if i == j:: If it's the same gene (diagonal of the matrix), the p-value is set to 0.0.
+
+
 else: corr, p_value = pearsonr(df[cols[i]], df[cols[j]]): For different genes, it calculates the Pearson correlation coefficient (corr) and the corresponding p-value (p_value) using the pearsonr function from scipy.stats.
+
+
 pvalues_matrix.iloc[i, j] = p_value and pvalues_matrix.iloc[j, i] = p_value: Stores the calculated p-value in both the upper and lower triangles of the pvalues_matrix (since the p-value for the correlation between gene A and gene B is the same as between gene B and gene A).
+
+
 return pvalues_matrix: Returns the DataFrame containing the pairwise p-values.
+
+
 Calculating and Displaying p-values:
 p_values_matrix = calculate_pvalues(df_1.T): Calls the calculate_pvalues function with the transposed df_1 DataFrame. As explained before, we transpose df_1 so that the genes are columns for the correlation calculation.
+
+
 display(p_values_matrix): Displays the resulting p-value matrix.
+
+
 In summary, this code calculates the statistical significance (p-values) of the pairwise correlations between the genes in your filtered dataset. These p-values help determine if the observed correlations are statistically significant or likely due to random chance.
-
-Generated P value table: ## P-Value Matrix
-
-| Hugo Symbol | BRCA1    | BRCA2 | RAD51   | RAD52   | RAD54L  |
-|-------------|----------|-------|---------|---------|---------|
-| **BRCA1**   | 0.0      | 0.0   | 0.000001| 0.00188 | 0.000004|
-| **BRCA2**   | 0.0      | 0.0   | 0.0     | 0.0     | 0.0     |
-| **RAD51**   | 0.000001 | 0.0   | 0.0     | 0.0     | 0.0     |
-| **RAD52**   | 0.00188  | 0.0   | 0.0     | 0.0     | 0.0     |
-| **RAD54L**  | 0.000004 | 0.0   | 0.0     | 0.0     | 0.0     |
-
-**Generation of q values**
-TERMINAL COMMAND 9: from statsmodels.stats.multitest import multipletests
-
-# Extract the p-values from the matrix and flatten them
-pvalues_flat = p_values_matrix.values.flatten()
-
-# Apply the Benjamini-Hochberg correction
-reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh')
-
-# Reshape the q-values back into a matrix
-q_values_matrix = pd.DataFrame(qvalues_flat.reshape(p_values_matrix.shape),
-                               index=p_values_matrix.index,
-                               columns=p_values_matrix.columns)
-
-display(q_values_matrix)
-
-EXPLANATION: 
-From statsmodels.stats.multitest import multipletests: This line imports the multipletests function from the statsmodels library. This function is specifically designed to apply various multiple comparison correction methods.
-pvalues_flat = p_values_matrix.values.flatten():
-p_values_matrix.values: This accesses the underlying NumPy array of the p_values_matrix DataFrame.
-.flatten(): This method converts the 2D array of p-values into a 1D array (a single list of all p-values). Multiple comparison correction functions typically expect a flat list of p-values as input.
-reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh'):
-This is the core of the multiple comparison correction.
-multipletests(pvalues_flat, method='fdr_bh'): This calls the multipletests function with your flattened list of p-values (pvalues_flat).
-method='fdr_bh': This specifies the correction method to use, which is the Benjamini-Hochberg (BH) method. The BH method controls the False Discovery Rate (FDR), which is the expected proportion of rejected null hypotheses that are actually true (Type I errors).
-The function returns four values:
-reject: A boolean array indicating whether each corresponding p-value is rejected after correction (i.e., considered statistically significant).
-qvalues_flat: The adjusted p-values, also known as q-values, in a flattened 1D array.
-_, _: The other two returned values are less commonly used in this context and are assigned to _ (a convention to indicate that these values are being ignored).
-q_values_matrix = pd.DataFrame(qvalues_flat.reshape(p_values_matrix.shape), index=p_values_matrix.index, columns=p_values_matrix.columns):
-qvalues_flat.reshape(p_values_matrix.shape): This reshapes the flattened array of q-values back into the original matrix shape of the p_values_matrix.
-pd.DataFrame(...): This creates a new pandas DataFrame from the reshaped q-values.
-index=p_values_matrix.index and columns=p_values_matrix.columns: This assigns the row and column names from the original p_values_matrix to the new q_values_matrix, making it easy to see which q-value corresponds to which gene pair.
-display(q_values_matrix): This displays the resulting DataFrame containing the q-values.
-In summary, this code takes the raw p-values from all your pairwise gene correlation tests, adjusts them using the Benjamini-Hochberg method to account for the fact that you performed multiple tests, and then presents these adjusted p-values (q-values) in a matrix format. Q-values provide a more reliable measure of statistical significance when conducting multiple comparisons.
 
