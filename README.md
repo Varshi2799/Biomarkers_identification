@@ -148,6 +148,8 @@ https://research.fredhutch.org/diagnostic-biomarkers-center/en/datasets.html
 
 **Finalising a pathway:**
 Pathway selected: HR Pathway
+
+
 Reasoning: Knowledge about DNA damage agents and the different DNA repair mechanisms.
 Biomarkers from HR pathway genes can signal DNA repair proficiency, tumor aggressiveness, or therapeutic vulnerabilities.
 Understanding gene contributing to genomic stability.
@@ -306,7 +308,7 @@ EXPLANATION: Visualise the dataframe using command df
 ## STEP3: Add in the genes of interest and find the gene and sample details in relation to the gene in the dataframe
 
 
-### TERMINAL COMMAND: *gene_list = ["BRCA1","BRCA2","RAD51","RAD52","RAD54L"]
+### TERMINAL COMMAND: gene_list = ["BRCA1","BRCA2","RAD51","RAD52","RAD54L"]
 
 
 EXPLANATION:
