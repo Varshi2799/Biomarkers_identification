@@ -490,27 +490,16 @@ In summary, this code calculates the statistical significance (p-values) of the 
 
 from statsmodels.stats.multitest import multipletests
 
---> Extract the p-values from the matrix and flatten them
-
-
+#Extract the p-values from the matrix and flatten them
 pvalues_flat = p_values_matrix.values.flatten()
 
---> Apply the Benjamini-Hochberg correction
-
-
+#Apply the Benjamini-Hochberg correction
 reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh')
 
---> Reshape the q-values back into a matrix
-
-
+#Reshape the q-values back into a matrix
 q_values_matrix = pd.DataFrame(qvalues_flat.reshape(p_values_matrix.shape),
-
-
-                          index=p_values_matrix.index,
-
-
-                              columns=p_values_matrix.columns)
-
+                               index=p_values_matrix.index,
+                               columns=p_values_matrix.columns)
 
 display(q_values_matrix)
 
