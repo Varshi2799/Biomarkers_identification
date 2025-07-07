@@ -254,7 +254,7 @@ f: Specify the archive file name.
 
 -> The appropriate mRNA expression file is taken and the data from the same is being fit into the pandas dataframe for further analysis
 
--> File chosen in this scenario:
+-> File chosen in this scenario: *data_mrna_seq_v2_rsem.txt*
 
 
 ### TERMINAL COMMAND 3: 
@@ -354,7 +354,7 @@ Setting the index can be useful for quickly accessing rows based on gene symbols
 ## STEP6: Correlation analysis
 
 
-## TERMINAL COMMAND 7: df_1.T.corr()
+### TERMINAL COMMAND 7: df_1.T.corr()
 
 
 EXPLANATION: 
@@ -470,4 +470,81 @@ display(p_values_matrix): Displays the resulting p-value matrix.
 
 
 In summary, this code calculates the statistical significance (p-values) of the pairwise correlations between the genes in your filtered dataset. These p-values help determine if the observed correlations are statistically significant or likely due to random chance.
+
+
+### Generated P-Value Matrix
+
+| Hugo_Symbol | BRCA1   | BRCA2 | RAD51   | RAD52  | RAD54L  |
+|-------------|---------|-------|---------|--------|---------|
+| **BRCA1**   | 0.0     | 0.0   | 0.000001| 0.00188| 0.000004|
+| **BRCA2**   | 0.0     | 0.0   | 0.0     | 0.0    | 0.0     |
+| **RAD51**   | 0.000001| 0.0   | 0.0     | 0.0    | 0.0     |
+| **RAD52**   | 0.00188 | 0.0   | 0.0     | 0.0    | 0.0     |
+| **RAD54L**  | 0.000004| 0.0   | 0.0     | 0.0    | 0.0     |
+
+
+## STEP 8: Generation of Q values
+
+### TERMINAL COMMAND 9:
+
+
+from statsmodels.stats.multitest import multipletests
+
+--> Extract the p-values from the matrix and flatten them
+
+
+pvalues_flat = p_values_matrix.values.flatten()
+
+--> Apply the Benjamini-Hochberg correction
+
+
+reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh')
+
+--> Reshape the q-values back into a matrix
+
+
+q_values_matrix = pd.DataFrame(qvalues_flat.reshape(p_values_matrix.shape),
+
+
+                               index=p_values_matrix.index,
+
+
+                               columns=p_values_matrix.columns)
+
+
+display(q_values_matrix)
+
+
+EXPLANATION:
+This code uses the statsmodels library to apply the Benjamini-Hochberg (FDR) correction to the p-values.
+
+pvalues_flat = p_values_matrix.values.flatten(): This line extracts all the p-values from the p_values_matrix DataFrame and converts them into a single, flat array. This is necessary because the multipletests function expects a one-dimensional array of p-values.
+
+
+reject, qvalues_flat, _, _ = multipletests(pvalues_flat, method='fdr_bh'): This is the core of the multiple testing correction.
+
+
+multipletests() is the function from statsmodels that performs the correction.
+
+
+pvalues_flat is the input array of p-values.
+
+
+method='fdr_bh' specifies the Benjamini-Hochberg method (False Discovery Rate) for correction.
+
+
+The function returns four values:
+
+reject: A boolean array indicating whether each p-value is rejected (considered significant) after correction.
+
+qvalues_flat: The corrected p-values (q-values) as a flat array.
+
+The remaining two outputs are not used in this code, hence the _.
+
+q_values_matrix = pd.DataFrame(...): This line reshapes the flat array of q-values (qvalues_flat) back into a DataFrame with the same dimensions, index, and columns as the original p_values_matrix. This makes it easy to see the corrected q-value for each gene pair in a matrix format.
+
+display(q_values_matrix): This line displays the resulting DataFrame containing the q-values.
+
+In essence, this code adjusts the p-values obtained from the pairwise correlations to account for the fact that you performed multiple comparisons. The Benjamini-Hochberg correction helps control the false discovery rate, which is the expected proportion of rejected null hypotheses that are actually true (Type I errors).
+
 
